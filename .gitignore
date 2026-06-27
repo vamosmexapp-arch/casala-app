@@ -1,0 +1,9 @@
+# Firebase real config (keep private)
+js/firebase-config.js
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+node_modules/
+# Vercel
+.vercel
