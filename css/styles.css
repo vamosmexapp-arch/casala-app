@@ -236,16 +236,43 @@ footer{background:var(--clay);color:#F3E7D6;margin-top:54px;padding:44px 0 28px}
 .foot-col a:hover{opacity:1}
 .foot-bottom{margin-top:32px;padding-top:18px;border-top:1px solid rgba(255,255,255,.15);font-size:.8rem;opacity:.65;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
-/* Back-to-top floating button — opaque but visible, small footprint */
-.back-to-top{
-  position:fixed; right:20px; bottom:20px; z-index:60;
-  width:46px; height:46px; border-radius:50%;
-  display:inline-flex; align-items:center; justify-content:center;
-  background:var(--terra); color:#fff; border:none; cursor:pointer;
-  opacity:0; visibility:hidden; transform:translateY(10px);
-  box-shadow:0 6px 18px rgba(44,33,24,.22);
-  transition:opacity .2s, transform .2s, visibility .2s, background .15s;
+/* ===== Back-to-top floating button (opaque but visible, small) ===== */
+.back-to-top{position:fixed;right:20px;bottom:20px;z-index:60;width:46px;height:46px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--terra);color:#fff;border:none;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(10px);box-shadow:0 6px 18px rgba(44,33,24,.22);transition:opacity .2s,transform .2s,visibility .2s,background .15s}
+.back-to-top.show{opacity:.78;visibility:visible;transform:translateY(0)}
+.back-to-top.show:hover{opacity:1;background:var(--agave-deep)}
+@media(max-width:680px){.back-to-top{right:14px;bottom:14px;width:42px;height:42px}}
+
+/* ===== #7 Características: Ver más toggle ===== */
+.feat-toggle{display:inline-flex;align-items:center;gap:6px;border:1.5px dashed var(--terra);border-radius:999px;padding:8px 15px;font-size:.86rem;font-weight:700;color:var(--terra);background:transparent;cursor:pointer;transition:background .15s}
+.feat-toggle:hover{background:rgba(197,107,74,.08)}
+.pill[hidden]{display:none}
+
+/* ===== #6 Desktop-only: Planta box fills trailing row space (mobile untouched) ===== */
+@media(min-width:861px){
+  .filter-row .floor-feature{flex:1 1 320px;min-width:300px}
+  .filter-row .floor-feature .pills{gap:8px}
 }
-.back-to-top.show{ opacity:.78; visibility:visible; transform:translateY(0); }
-.back-to-top.show:hover{ opacity:1; background:var(--agave-deep); }
-@media(max-width:680px){ .back-to-top{ right:14px; bottom:14px; width:42px; height:42px; } }
+
+/* ===== #1 Inline colonia map preview in listing ===== */
+.map-link-btn{display:inline-flex;align-items:center;gap:5px;margin-left:10px;font-size:.82rem;font-weight:700;color:var(--terra);background:rgba(197,107,74,.09);border:1.5px solid rgba(197,107,74,.3);border-radius:999px;padding:5px 12px;cursor:pointer;vertical-align:middle;transition:background .15s}
+.map-link-btn:hover{background:rgba(197,107,74,.18)}
+.detail-map{max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .3s ease,margin .3s ease;margin:0}
+.detail-map.open{max-height:420px;opacity:1;margin:16px 0 4px}
+.detail-map-canvas{position:relative;height:240px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,#EFE7D6,#E7DCC6)}
+.dm-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(124,93,60,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(124,93,60,.10) 1px,transparent 1px);background-size:46px 46px}
+.dm-area{position:absolute;top:50%;left:50%;width:180px;height:140px;transform:translate(-50%,-45%);background:rgba(197,107,74,.16);border:2px dashed rgba(197,107,74,.55);border-radius:50%}
+.dm-pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-90%);color:var(--terra)}
+.dm-pin svg{width:34px;height:34px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.dm-label{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:var(--white);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.85rem;font-weight:700;color:var(--clay);white-space:nowrap;box-shadow:var(--shadow-sm)}
+.dm-note{font-size:.78rem;color:var(--muted);margin-top:9px;line-height:1.5}
+
+/* ===== #8 Vamos cross-promo CTA ===== */
+.vamos-cta{display:flex;align-items:center;gap:16px;margin-top:22px;padding:16px 20px;border-radius:18px;background:linear-gradient(100deg,#1f5130,#2c6b40);color:#fff;text-decoration:none;box-shadow:var(--shadow-sm);transition:transform .15s,box-shadow .15s}
+.vamos-cta:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.vamos-ic{width:48px;height:48px;border-radius:12px;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.vamos-txt{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.vamos-txt strong{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;line-height:1.2}
+.vamos-txt span{font-size:.85rem;opacity:.9;line-height:1.4}
+.vamos-go{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.9rem;white-space:nowrap;flex:none;background:rgba(255,255,255,.16);padding:9px 15px;border-radius:999px}
+.vamos-cta:hover .vamos-go{background:rgba(255,255,255,.26)}
+@media(max-width:680px){.vamos-cta{flex-wrap:wrap;gap:12px}.vamos-txt{flex-basis:60%}.vamos-go{width:100%;justify-content:center}}
