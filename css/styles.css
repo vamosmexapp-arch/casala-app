@@ -22,7 +22,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 header{position:sticky;top:0;z-index:50;background:rgba(243,235,221,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:12px}
 .brand{display:flex;align-items:center;gap:11px;min-width:0;cursor:pointer}
-.logo-mark{width:42px;height:42px;flex:none}
+.logo-mark{width:58px;height:38px;flex:none}
 .brand-text{display:flex;flex-direction:column;line-height:1;min-width:0}
 .brand-name{font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;color:var(--clay)}
 .brand-slogan{font-size:.7rem;font-weight:600;letter-spacing:.02em;color:var(--agave-deep);margin-top:3px}
@@ -56,10 +56,14 @@ header{position:sticky;top:0;z-index:50;background:rgba(243,235,221,.9);backdrop
 .ai-hint b{color:var(--agave-deep);font-weight:700}
 
 /* "O usa los filtros" divider between search and filters */
-.filter-divider{display:flex;align-items:center;gap:14px;max-width:680px;margin:26px auto 0;color:var(--muted)}
-.filter-divider::before,.filter-divider::after{content:'';flex:1;height:1px;background:var(--line)}
-.filter-divider span{font-size:.85rem;font-weight:600;white-space:nowrap}
-@media(max-width:680px){.filter-divider{margin-left:0;margin-right:0}}
+.filter-divider{display:flex;flex-direction:column;align-items:center;gap:0;max-width:760px;margin:38px auto 4px;width:100%}
+.filter-divider .fd-line{display:flex;align-items:center;gap:16px;width:100%;color:var(--muted)}
+.filter-divider .fd-line::before,.filter-divider .fd-line::after{content:'';flex:1;height:1.5px;background:linear-gradient(90deg,transparent,var(--line))}
+.filter-divider .fd-line::after{background:linear-gradient(90deg,var(--line),transparent)}
+.filter-divider .fd-label{display:inline-flex;align-items:center;gap:9px;font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--clay);background:var(--sand-deep);border:1.5px solid var(--line);padding:9px 20px;border-radius:999px;white-space:nowrap;letter-spacing:-.01em}
+.filter-divider .fd-label svg{color:var(--terra)}
+.filter-divider .fd-sub{margin-top:12px;font-size:.86rem;color:var(--muted);font-weight:500}
+@media(max-width:680px){.filter-divider{margin:30px 0 4px}.filter-divider .fd-label{font-size:.98rem}}
 
 /* FILTERS */
 .filters{padding:8px 0}

@@ -7,7 +7,7 @@
 
 // ---------- tiny state ----------
 const state = {
-  filters: { beds:null, baths:null, park:null, priceMin:null, priceMax:null, floor:null, elevator:false, zone:"all", features:new Set() },
+  filters: { beds:null, baths:null, park:null, priceMin:null, priceMax:null, floor:"any", elevator:false, zone:"all", features:new Set() },
   favorites: new Set(JSON.parse(localStorage.getItem('casala_favs') || '[]')),
   signedIn: false,
 };
@@ -88,7 +88,10 @@ async function renderHome(){
       <button class="search-go" data-action="search">Buscar ${ICON.arrow}</button>
     </div>
     <p class="ai-hint"><b>Búsqueda con IA:</b> escribe como hablas y entendemos lo que buscas.</p>
-    <div class="filter-divider"><span>O usa los filtros</span></div>
+    <div class="filter-divider">
+      <div class="fd-line"><span class="fd-label"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M6 12h12M10 18h4"/></svg>O usa los filtros</span></div>
+      <p class="fd-sub">¿Prefieres explorar tú? Ajusta recámaras, precio, zona y más.</p>
+    </div>
   </div></section>
 
   <section class="filters"><div class="wrap">
@@ -114,7 +117,7 @@ async function renderHome(){
       <div class="filter-features">
         <div class="filter-label">Características especiales</div>
         <div class="pills" data-filter="features" data-multi>
-          ${['Pet friendly','Amueblado','Remodelado','En coto','Premium'].map(f=>`<button class="pill ${state.filters.features.has(f)?'active':''}" data-val="${f}">${f}</button>`).join('')}
+          ${['Pet friendly','Amueblado','Remodelado','En coto','Premium','Terraza / balcón','Roof garden','Alberca','Gimnasio','Vigilancia 24/7','Cocina integral','Patio / jardín','Bodega','Internet incluido'].map(f=>`<button class="pill ${state.filters.features.has(f)?'active':''}" data-val="${f}">${f}</button>`).join('')}
         </div>
       </div>
       <div class="filter-actions">
@@ -286,6 +289,15 @@ function updateNav(){
   if(av) av.querySelector('span').textContent = state.signedIn ? 'Mi cuenta' : 'Entrar';
 }
 
+// Sync the price input fields into state. Called before any re-render so typed
+// values survive (Bug fix: picking a Planta pill used to wipe the typed price).
+function syncPriceFromDOM(){
+  const mn = document.getElementById('priceMin');
+  const mx = document.getElementById('priceMax');
+  if(mn) state.filters.priceMin = mn.value ? parseInt(mn.value.replace(/\D/g,'')) || null : null;
+  if(mx) state.filters.priceMax = mx.value ? parseInt(mx.value.replace(/\D/g,'')) || null : null;
+}
+
 // ---------- global click handling ----------
 document.addEventListener('click', e=>{
   const nav = e.target.closest('[data-nav]');
@@ -296,6 +308,7 @@ document.addEventListener('click', e=>{
 
   if(fav){
     e.stopPropagation();
+    syncPriceFromDOM();
     const id = fav.dataset.fav;
     if(state.favorites.has(id)){ state.favorites.delete(id); }
     else {
@@ -309,6 +322,7 @@ document.addEventListener('click', e=>{
   if(nav){ navTo(nav.dataset.nav); return; }
   if(amenity){ amenity.classList.toggle('on'); return; }
   if(pill && pill.parentElement.dataset.filter){
+    syncPriceFromDOM();
     const group = pill.parentElement;
     const key = group.dataset.filter;
     const val = pill.dataset.val;
@@ -320,10 +334,18 @@ document.addEventListener('click', e=>{
       return;
     }
     // single-select: toggle off if same
+    if(key==='floor'){
+      // "No importa" (any) clears the floor filter but stays visibly selected.
+      // Clicking the already-active floor returns to "No importa".
+      if(val==='any'){ state.filters.floor='any'; }
+      else if(String(state.filters.floor)===val){ state.filters.floor='any'; }
+      else { state.filters.floor=val; }
+      router();
+      return;
+    }
     if(String(state.filters[key])===val){ state.filters[key] = key==='zone'?'all':null; }
     else {
-      if(key==='floor' && val==='any'){ state.filters[key]=null; }
-      else if(key==='zone'){ state.filters[key]=val; }
+      if(key==='zone'){ state.filters[key]=val; }
       else { state.filters[key]=val; }
     }
     router();
@@ -340,7 +362,7 @@ document.addEventListener('click', e=>{
       router();
       document.querySelector('.grid')?.scrollIntoView({behavior:'smooth'});
     }
-    else if(a==='clear'){ state.filters={beds:null,baths:null,park:null,priceMin:null,priceMax:null,floor:null,elevator:false,zone:'all',features:new Set()}; router(); }
+    else if(a==='clear'){ state.filters={beds:null,baths:null,park:null,priceMin:null,priceMax:null,floor:'any',elevator:false,zone:'all',features:new Set()}; router(); }
     else if(a==='back'){ history.back(); }
     else if(a==='contact'){ showModal('Contactar al propietario','Para enviar un mensaje necesitas una cuenta. Es rápido y gratis.','Crear cuenta','Ahora no'); }
   }

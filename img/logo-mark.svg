@@ -1,0 +1,14 @@
+<svg viewBox="0 0 62 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Casalá">
+  <defs><style>
+    .k{fill:none;stroke:#C56B4A;stroke-linecap:round;stroke-linejoin:round}
+    .kf{fill:#C56B4A}
+  </style></defs>
+  <path class="k" stroke-width="6.5" d="M 24 7 A 13.5 13.5 0 1 0 24 34"/>
+  <circle cx="16" cy="20.5" r="3.4" class="kf"/>
+  <path class="k" stroke-width="6.5" d="M 35 20.5 H 50"/>
+  <g class="kf">
+    <rect x="49" y="12" width="5" height="13" rx="1.4"/>
+    <rect x="55" y="8" width="6" height="17" rx="1.4"/>
+    <rect x="49" y="25" width="12" height="4" rx="1.4"/>
+  </g>
+</svg>

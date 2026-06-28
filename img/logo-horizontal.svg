@@ -1,0 +1,28 @@
+<svg viewBox="0 0 380 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Casalá">
+  <defs><style>
+    .k{fill:none;stroke:#C56B4A;stroke-linecap:round;stroke-linejoin:round}
+    .kf{fill:#C56B4A}
+    .word{font-family:'Fraunces',Georgia,serif;font-weight:600;fill:#A6502F;letter-spacing:-1px}
+  </style></defs>
+
+  <!-- BOW: thick open ring = the C -->
+  <path class="k" stroke-width="13" d="M 60 28 A 28 28 0 1 0 60 84"/>
+  <!-- keyhole detail inside the bow -->
+  <circle cx="44" cy="56" r="7" class="kf"/>
+
+  <!-- SHAFT -->
+  <path class="k" stroke-width="13" d="M 84 56 H 300"/>
+
+  <!-- BIT: skyline buildings as the key's teeth -->
+  <g class="kf">
+    <rect x="300" y="38" width="11" height="30" rx="2.5"/>
+    <rect x="314" y="28" width="15" height="40" rx="2.5"/>
+    <rect x="332" y="44" width="10" height="24" rx="2.5"/>
+    <rect x="300" y="68" width="42" height="9" rx="3"/>
+    <rect x="307" y="77" width="10" height="11" rx="2.5"/>
+    <rect x="325" y="77" width="12" height="8" rx="2.5"/>
+  </g>
+
+  <!-- WORDMARK: 'asalá' completes the C of the bow -->
+  <text class="word" x="92" y="50" font-size="34">asalá</text>
+</svg>
