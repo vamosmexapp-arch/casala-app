@@ -1,12 +1,6 @@
 /* ============================================================
-   Casalá — sample data
-   This is placeholder data. When you wire up Firebase, replace
-   getListings() with a Firestore query. The app code doesn't
-   need to change — it just calls getListings().
-
-   PROPERTY_IMAGES are real photos (Pexels, free license),
-   resized/compressed and embedded as base64 so they render
-   reliably offline and in client presentations.
+   Casalá — sample data (real Pexels photos, base64-embedded)
+   Swap getListings() for a Firestore query when wiring Firebase.
    ============================================================ */
 
 const PROPERTY_IMAGES = [
@@ -78,10 +72,5 @@ const LISTINGS = [
     agent:{name:"Grupo Habitar", role:"Inmobiliaria", initials:"GH"} }
 ];
 
-/* The app calls this. Swap the body for a Firestore query later. */
-async function getListings(){
-  return LISTINGS;
-}
-async function getListingById(id){
-  return LISTINGS.find(l => l.id === id);
-}
+async function getListings(){ return LISTINGS; }
+async function getListingById(id){ return LISTINGS.find(l => l.id === id); }

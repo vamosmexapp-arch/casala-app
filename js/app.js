@@ -289,13 +289,11 @@ function updateNav(){
   if(av) av.querySelector('span').textContent = state.signedIn ? 'Mi cuenta' : 'Entrar';
 }
 
-// Sync the price input fields into state. Called before any re-render so typed
-// values survive (Bug fix: picking a Planta pill used to wipe the typed price).
+// Sync typed price into state before any re-render (prevents wiping typed values).
 function syncPriceFromDOM(){
-  const mn = document.getElementById('priceMin');
-  const mx = document.getElementById('priceMax');
-  if(mn) state.filters.priceMin = mn.value ? parseInt(mn.value.replace(/\D/g,'')) || null : null;
-  if(mx) state.filters.priceMax = mx.value ? parseInt(mx.value.replace(/\D/g,'')) || null : null;
+  const mn=document.getElementById('priceMin'), mx=document.getElementById('priceMax');
+  if(mn) state.filters.priceMin = mn.value ? (parseInt(mn.value.replace(/\D/g,''))||null) : null;
+  if(mx) state.filters.priceMax = mx.value ? (parseInt(mx.value.replace(/\D/g,''))||null) : null;
 }
 
 // ---------- global click handling ----------
@@ -333,21 +331,17 @@ document.addEventListener('click', e=>{
       router();
       return;
     }
-    // single-select: toggle off if same
     if(key==='floor'){
       // "No importa" (any) clears the floor filter but stays visibly selected.
-      // Clicking the already-active floor returns to "No importa".
       if(val==='any'){ state.filters.floor='any'; }
       else if(String(state.filters.floor)===val){ state.filters.floor='any'; }
       else { state.filters.floor=val; }
       router();
       return;
     }
+    // single-select: toggle off if same
     if(String(state.filters[key])===val){ state.filters[key] = key==='zone'?'all':null; }
-    else {
-      if(key==='zone'){ state.filters[key]=val; }
-      else { state.filters[key]=val; }
-    }
+    else { state.filters[key]=val; }
     router();
     return;
   }
@@ -374,7 +368,10 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(!state.signedIn){ showModal('Bienvenido a Casalá','Entra o crea tu cuenta para guardar favoritos y contactar propietarios.','Crear cuenta','Iniciar sesión'); }
     else { navTo('favoritos'); }
   });
-  document.getElementById('brandHome')?.addEventListener('click', ()=>navTo(''));
+  document.getElementById('brandHome')?.addEventListener('click', ()=>{
+    if((location.hash||'#/')==='#/'){ window.scrollTo({top:0,behavior:'smooth'}); }
+    else { navTo(''); setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),60); }
+  });
   document.getElementById('navFavs')?.addEventListener('click', ()=>navTo('favoritos'));
   const goAbout = ()=>{
     if((location.hash||'#/')!=='#/'){ navTo(''); setTimeout(()=>document.getElementById('about')?.scrollIntoView({behavior:'smooth'}),120); }
@@ -382,6 +379,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
   };
   document.getElementById('navAbout')?.addEventListener('click', goAbout);
   document.getElementById('footAbout')?.addEventListener('click', goAbout);
+  // Back-to-top button: appears after scrolling down ~400px
+  const btt = document.getElementById('backToTop');
+  if(btt){
+    const toggleBtt = ()=>{ if(window.scrollY > 400) btt.classList.add('show'); else btt.classList.remove('show'); };
+    window.addEventListener('scroll', toggleBtt, {passive:true});
+    btt.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+    toggleBtt();
+  }
+
   window.addEventListener('hashchange', router);
   router();
 });
